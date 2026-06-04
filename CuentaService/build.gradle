@@ -5,7 +5,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
-group = 'com.johnjqc.devsu.persona'
+group = 'com.johnjqc.devsu.cuenta'
 version = '1.0.0'
 
 java {
@@ -52,10 +52,10 @@ tasks.named('test') {
 
 openApiGenerate {
     generatorName = "spring"
-    inputSpec = "$rootDir/src/main/resources/openapi/customer-api.yaml"
+    inputSpec = "$rootDir/src/main/resources/openapi/cuenta-api.yaml"
     outputDir = "$buildDir/generated"
-    apiPackage = "com.johnjqc.devsu.persona.api"
-    modelPackage = "com.johnjqc.devsu.persona.dto"
+    apiPackage = "com.johnjqc.devsu.cuenta.api"
+    modelPackage = "com.johnjqc.devsu.cuenta.dto"
     configOptions = [
             interfaceOnly            : "true",
             useSpringBoot3           : "true",
@@ -70,6 +70,10 @@ openApiGenerate {
     ]
 }
 
+tasks.named("compileJava") {
+    dependsOn("openApiGenerate")
+}
+
 sourceSets {
     main {
         java {
@@ -82,6 +86,6 @@ sourceSets {
 
 openApiValidate {
     inputSpec.set(
-            "$rootDir/src/main/resources/openapi/customer-api.yaml"
+            "$rootDir/src/main/resources/openapi/cuenta-api.yaml"
     )
 }

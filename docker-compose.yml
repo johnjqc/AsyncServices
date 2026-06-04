@@ -2,32 +2,29 @@ version: '3.8'
 
 services:
 
-  postgres:
-    image: postgres:16
-    container_name: persona-db
-    environment:
-      POSTGRES_DB: persona_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    networks:
-      - persona-net
-
   persona-service:
-    build: .
+    build: PersoanService/.
     container_name: persona-service
     depends_on:
       - postgres
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/persona_db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     networks:
-      - persona-net
+      - async-net
+
+  cuenta-service:
+    build: CuentaService/.
+    container_name: cuenta-service
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    networks:
+      - async-net
 
 networks:
-  persona-net:
+  async-net:
