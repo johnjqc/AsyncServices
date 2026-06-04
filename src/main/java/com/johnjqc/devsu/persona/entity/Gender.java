@@ -1,4 +1,4 @@
-package com.johnjqc.devsu.persona.domain;
+package com.johnjqc.devsu.persona.entity;
 
 public enum Gender {
     MALE,
