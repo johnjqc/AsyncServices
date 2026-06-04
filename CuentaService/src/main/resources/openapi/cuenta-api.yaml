@@ -1,0 +1,222 @@
+openapi: 3.0.3
+info:
+  title: Account Service API
+  description: Microservice for managing bank accounts and transactions
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/api/v1
+
+tags:
+  - name: Accounts
+  - name: Transactions
+
+paths:
+
+  /accounts:
+    post:
+      tags: [Accounts]
+      summary: Create a new account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+      responses:
+        "201":
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+
+    get:
+      tags: [Accounts]
+      summary: Get accounts by clientId
+      parameters:
+        - name: clientId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountResponse'
+
+
+  /accounts/{accountNumber}:
+    get:
+      tags: [Accounts]
+      summary: Get account by account number
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Account found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+
+    put:
+      tags: [Accounts]
+      summary: Update account
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+      responses:
+        "200":
+          description: Account updated
+
+  /transactions:
+    post:
+      tags: [Transactions]
+      summary: Create a transaction (deposit or withdrawal)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        "201":
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+
+  /transactions/account/{accountNumber}:
+    get:
+      tags: [Transactions]
+      summary: Get transactions by account
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+components:
+  schemas:
+
+    AccountRequest:
+      type: object
+      required:
+        - accountNumber
+        - accountType
+        - initialBalance
+        - clientId
+      properties:
+        accountNumber:
+          type: string
+          example: "478758"
+        accountType:
+          type: string
+          enum: [SAVINGS, CHECKING]
+        initialBalance:
+          type: number
+          format: double
+          example: 2000
+        status:
+          type: boolean
+          example: true
+        clientId:
+          type: integer
+          example: 1
+
+    AccountResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        accountNumber:
+          type: string
+        accountType:
+          type: string
+        initialBalance:
+          type: number
+        status:
+          type: boolean
+        clientId:
+          type: integer
+
+    TransactionRequest:
+      type: object
+      required:
+        - accountId
+        - transactionType
+        - amount
+      properties:
+        accountId:
+          type: integer
+        transactionType:
+          type: string
+          description: DEPOSIT or WITHDRAWAL
+        amount:
+          type: number
+          example: -500
+        description:
+          type: string
+          example: "Withdrawal of 500"
+
+    TransactionResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        accountId:
+          type: integer
+        date:
+          type: string
+          format: date-time
+        transactionType:
+          type: string
+        amount:
+          type: number
+        previousBalance:
+          type: number
+        availableBalance:
+          type: number
+        description:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time

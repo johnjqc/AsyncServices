@@ -14,8 +14,13 @@ services:
       - async-net
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.5.0
     container_name: kafka
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 9092"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
     depends_on:
       - zookeeper
     ports:
@@ -29,13 +34,16 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
-      - async-net
+      async-net:
+        aliases:
+          - kafka
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
     ports:
       - 8090:8080
     environment:
@@ -49,54 +57,22 @@ services:
     image: confluentinc/cp-kafka:7.5.0
     container_name: kafka-init
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
     volumes:
       - ./docker/kafka/init-topics.sh:/init-topics.sh
     entrypoint: [ "sh", "/init-topics.sh" ]
     networks:
       - async-net
 
-  persona-db:
-    image: postgres:16
-    container_name: persona-db
-    environment:
-      POSTGRES_DB: persona_db
-      POSTGRES_USER: persona_user
-      POSTGRES_PASSWORD: persona_pass
-    ports:
-      - "5433:5432"
-    networks:
-      - async-net
-    volumes:
-      - persona-data:/var/lib/postgresql/data
-
-  cuenta-db:
-    image: postgres:16
-    container_name: cuenta-db
-    environment:
-      POSTGRES_DB: cuenta_db
-      POSTGRES_USER: cuenta_user
-      POSTGRES_PASSWORD: cuenta_pass
-    ports:
-      - "5434:5432"
-    networks:
-      - async-net
-    volumes:
-      - cuenta-data:/var/lib/postgresql/data
 
   persona-service:
     build: ./PersonaService
     container_name: persona-service
     depends_on:
-      - persona-db
       - kafka
     ports:
       - "8081:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://persona-db:5432/persona_db
-      SPRING_DATASOURCE_USERNAME: persona_user
-      SPRING_DATASOURCE_PASSWORD: persona_pass
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     networks:
       - async-net
 
@@ -109,10 +85,7 @@ services:
     ports:
       - "8082:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://cuenta-db:5432/cuenta_db
-      SPRING_DATASOURCE_USERNAME: cuenta_user
-      SPRING_DATASOURCE_PASSWORD: cuenta_pass
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
     networks:
       - async-net
 
@@ -122,3 +95,4 @@ networks:
 volumes:
   persona-data:
   cuenta-data:
+
