@@ -3,6 +3,8 @@ package com.johnjqc.devsu.persona.service.implementation;
 import com.johnjqc.devsu.persona.entity.Client;
 import com.johnjqc.devsu.persona.entity.Gender;
 import com.johnjqc.devsu.persona.entity.Person;
+import com.johnjqc.devsu.persona.event.payload.ClientCreatedEvent;
+import com.johnjqc.devsu.persona.event.publisher.ClientEventPublisher;
 import com.johnjqc.devsu.persona.exception.ClientAlreadyExistsException;
 import com.johnjqc.devsu.persona.exception.ClientNotFoundException;
 import com.johnjqc.devsu.persona.mapper.ClientServiceMapper;
@@ -25,8 +27,10 @@ public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
     private final PersonRepository personRepository;
     private final ClientServiceMapper mapper;
+    private final ClientEventPublisher clientEventPublisher;
 
     @Override
+    @Transactional
     public ClientServiceResponse create(ClientServiceRequest request) {
 
         if (clientRepository.existsByPersonIdentification(request.identification())) {
@@ -38,7 +42,17 @@ public class ClientServiceImpl implements ClientService {
         Person savedPerson = personRepository.save(client.getPerson());
         client.setPerson(savedPerson);
 
-        return mapper.toServiceResponse(clientRepository.save(client));
+        ClientServiceResponse clientServiceResponse = mapper.toServiceResponse(clientRepository.save(client));
+
+        ClientCreatedEvent event = new ClientCreatedEvent(
+                clientServiceResponse.clientId(),
+                clientServiceResponse.name(),
+                clientServiceResponse.identification()
+        );
+
+        clientEventPublisher.publishClientCreated(event);
+
+        return clientServiceResponse;
     }
 
     @Override

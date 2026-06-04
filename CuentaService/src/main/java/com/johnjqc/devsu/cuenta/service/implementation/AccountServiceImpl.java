@@ -1,7 +1,10 @@
 package com.johnjqc.devsu.cuenta.service.implementation;
 
 import com.johnjqc.devsu.cuenta.entity.Account;
+import com.johnjqc.devsu.cuenta.entity.ClientSnapshot;
 import com.johnjqc.devsu.cuenta.exception.AccountNotFoundException;
+import com.johnjqc.devsu.cuenta.exception.ClientNotFoundException;
+import com.johnjqc.devsu.cuenta.repository.ClientSnapshotRepository;
 import com.johnjqc.devsu.cuenta.service.AccountService;
 import com.johnjqc.devsu.cuenta.service.mapper.AccountMapper;
 import com.johnjqc.devsu.cuenta.service.dto.AccountDto;
@@ -16,9 +19,13 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository repository;
+    private final ClientSnapshotRepository clientSnapshotRepository;
 
     @Override
-    public AccountDto create(AccountDto dto) {
+    public AccountDto create(Long clientId, AccountDto dto) {
+        ClientSnapshot client = clientSnapshotRepository.findById(clientId)
+                .orElseThrow(() ->
+                        new ClientNotFoundException(clientId));
         Account saved = repository.save(AccountMapper.toEntity(dto));
         return AccountMapper.toDto(saved);
     }

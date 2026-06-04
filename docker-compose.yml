@@ -80,7 +80,6 @@ services:
     build: ./CuentaService
     container_name: cuenta-service
     depends_on:
-      - cuenta-db
       - kafka
     ports:
       - "8082:8080"

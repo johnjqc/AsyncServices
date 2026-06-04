@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AccountService {
 
-    AccountDto create(AccountDto dto);
+    AccountDto create(Long clientId, AccountDto dto);
 
     AccountDto findByAccountNumber(String accountNumber);
 

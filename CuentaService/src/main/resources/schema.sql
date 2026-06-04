@@ -32,3 +32,11 @@ CREATE TABLE movimiento (
 
 CREATE INDEX idx_mov_cuenta_id ON movimiento(cuenta_id);
 CREATE INDEX idx_mov_fecha ON movimiento(fecha);
+
+CREATE TABLE client_snapshot (
+    client_id BIGINT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    identification VARCHAR(20) NOT NULL UNIQUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

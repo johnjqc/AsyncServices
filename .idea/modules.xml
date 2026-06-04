@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/AsyncServices.iml" filepath="$PROJECT_DIR$/.idea/AsyncServices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cuenta-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cuenta-service.main.iml" />
     </modules>
   </component>
 </project>
