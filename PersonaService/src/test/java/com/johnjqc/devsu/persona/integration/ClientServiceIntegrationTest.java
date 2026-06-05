@@ -1,6 +1,6 @@
 package com.johnjqc.devsu.persona.integration;
 /*
-import com.johnjqc.devsu.persona.service.ClientService;
+import com.johnjqc.devsu.persona.domain.port.in.ClientService;
 import com.johnjqc.devsu.persona.dto.Gender;
 import com.johnjqc.devsu.persona.service.dto.ClientServiceRequest;
 import com.johnjqc.devsu.persona.service.dto.ClientServiceResponse;
