@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e6eae1d0-7243-4148-aa54-5e9121e0c696" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PersonaService/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/PersonaService/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +128,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/repository/AsyncServices/CuentaService/src/main/java/com/johnjqc/devsu/cuenta",
+    "last_opened_file_path": "D:/repository/AsyncServices",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -139,6 +142,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\repository\AsyncServices" />
       <recent name="D:\repository\AsyncServices\CuentaService\src\main\java\com\johnjqc\devsu\cuenta" />
       <recent name="D:\repository\AsyncServices\CuentaService" />
     </key>
@@ -149,10 +153,15 @@
   <component name="RunManager" selected="Gradle.CuentaService [bootRun]">
     <configuration name="CuentaService [bootRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
+        <option name="env">
+          <map>
+            <entry key="SERVER_PORT" value="9090" />
+          </map>
+        </option>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/CuentaService" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -161,7 +170,7 @@
             <option value="bootRun" />
           </list>
         </option>
-        <option name="vmOptions" />
+        <option name="vmOptions" value="" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
@@ -272,6 +281,13 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Gradle.CuentaService [bootRun]" />
+      <item itemvalue="Gradle.CuentaService [build]" />
+      <item itemvalue="Gradle.CuentaService [clean]" />
+      <item itemvalue="Gradle.CuentaService [openApiGenerate]" />
+      <item itemvalue="Gradle.PersonaService [bootRun]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.CuentaService [bootRun]" />
@@ -294,5 +310,8 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/AsyncServices$CuentaService__bootRun_.ic" NAME="CuentaService [bootRun] Coverage Results" MODIFIED="1780670725418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

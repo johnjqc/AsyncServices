@@ -310,6 +310,71 @@ La información es mantenida mediante eventos Kafka.
 ./gradlew clean build
 ```
 
+```bash
+curl --location 'http://localhost:8080/api/v1/accounts' \
+--header 'Content-Type: application/json' \
+--data '{
+    "accountNumber": "585545",
+    "accountType": "CHECKING",
+    "initialBalance": 1000,
+    "status": true,
+    "clientId": 1
+}'
+```
+
+```bash
+curl --location 'http://localhost:8080/api/v1/accounts?page=0&size=10'
+```
+
+```bash
+curl --location 'http://localhost:8080/api/v1/accounts?clientId=1&page=0&size=10'
+```
+
+```bash
+curl --location 'http://localhost:8080/api/v1/accounts/478758'
+```
+
+```bash
+curl --location --request PUT 'http://localhost:8080/api/v1/accounts/478758' \
+--header 'Content-Type: application/json' \
+--data '{
+    "accountNumber": "478758",
+    "accountType": "SAVINGS",
+    "initialBalance": 2500,
+    "status": true,
+    "clientId": 1
+}'
+```
+### Transactions
+
+```bash
+curl --location 'http://localhost:8080/api/v1/transactions' \
+--header 'Content-Type: application/json' \
+--data '{
+    "accountId": 1,
+    "transactionType": "DEPOSIT",
+    "amount": 500
+}'
+```
+
+```bash
+curl --location 'http://localhost:8080/api/v1/transactions' \
+--header 'Content-Type: application/json' \
+--data '{
+    "accountId": 1,
+    "transactionType": "WITHDRAWAL",
+    "amount": 575
+}'
+```
+
+```bash
+curl --location 'http://localhost:8080/api/v1/transactions/account/478758?page=0&size=10'
+```
+
+```bash
+curl --location 'http://localhost:8080/api/v1/reports/account-statement?clientId=1&fromDate=2022-02-01&toDate=2022-02-28'
+```
+
 ## Ejecutar
 
 ```bash
