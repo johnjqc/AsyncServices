@@ -4,6 +4,7 @@ import com.johnjqc.devsu.persona.entity.Client;
 import com.johnjqc.devsu.persona.entity.Gender;
 import com.johnjqc.devsu.persona.entity.Person;
 import com.johnjqc.devsu.persona.event.payload.ClientCreatedEvent;
+import com.johnjqc.devsu.persona.event.payload.ClientUpdatedEvent;
 import com.johnjqc.devsu.persona.event.publisher.ClientEventPublisher;
 import com.johnjqc.devsu.persona.exception.ClientAlreadyExistsException;
 import com.johnjqc.devsu.persona.exception.ClientNotFoundException;
@@ -74,6 +75,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional
     public ClientServiceResponse update(Long id, ClientServiceRequest request) {
 
         Client client = clientRepository.findById(id)
@@ -91,7 +93,17 @@ public class ClientServiceImpl implements ClientService {
 
         client.setActive(request.active());
 
-        return mapper.toServiceResponse(clientRepository.save(client));
+        ClientServiceResponse clientServiceResponse = mapper.toServiceResponse(clientRepository.save(client));
+
+        ClientUpdatedEvent event = new ClientUpdatedEvent(
+                clientServiceResponse.clientId(),
+                clientServiceResponse.name(),
+                clientServiceResponse.identification()
+        );
+
+        clientEventPublisher.publishClientUpdated(event);
+
+        return clientServiceResponse;
     }
 
     @Override

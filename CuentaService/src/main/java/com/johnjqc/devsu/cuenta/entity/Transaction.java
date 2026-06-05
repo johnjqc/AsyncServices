@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "movimiento")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,27 +17,39 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movimiento_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "cuenta_id", nullable = false)
     private Account account;
 
-    @Column(nullable = false)
+    @Column(name = "fecha", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "transaction_type", nullable = false, length = 20)
+    @Column(name = "tipo_movimiento", nullable = false, length = 20)
     private String transactionType;
 
-    @Column(nullable = false, precision = 18, scale = 2)
+    @Column(name = "valor", nullable = false, precision = 18, scale = 2)
     private BigDecimal amount;
 
-    @Column(name = "previous_balance", nullable = false, precision = 18, scale = 2)
-    private BigDecimal previousBalance;
+    @Column(name = "estado", nullable = false)
+    private Boolean status;
 
-    @Column(name = "available_balance", nullable = false, precision = 18, scale = 2)
+    @Column(name = "saldo_inicial", nullable = false, precision = 18, scale = 2)
+    private BigDecimal initialBalance;
+
+    @Column(name = "saldo_disponible", nullable = false, precision = 18, scale = 2)
     private BigDecimal availableBalance;
 
-    @Column(length = 255)
-    private String description;
+    @PrePersist
+    public void prePersist() {
+        if (date == null) {
+            date = LocalDateTime.now();
+        }
+
+        if (status == null) {
+            status = Boolean.TRUE;
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package com.johnjqc.devsu.cuenta.service.implementation;
 
 import com.johnjqc.devsu.cuenta.entity.Account;
-import com.johnjqc.devsu.cuenta.entity.ClientSnapshot;
 import com.johnjqc.devsu.cuenta.exception.AccountNotFoundException;
 import com.johnjqc.devsu.cuenta.exception.ClientNotFoundException;
 import com.johnjqc.devsu.cuenta.repository.ClientSnapshotRepository;
@@ -10,9 +9,9 @@ import com.johnjqc.devsu.cuenta.service.mapper.AccountMapper;
 import com.johnjqc.devsu.cuenta.service.dto.AccountDto;
 import com.johnjqc.devsu.cuenta.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,12 +21,21 @@ public class AccountServiceImpl implements AccountService {
     private final ClientSnapshotRepository clientSnapshotRepository;
 
     @Override
-    public AccountDto create(Long clientId, AccountDto dto) {
-        ClientSnapshot client = clientSnapshotRepository.findById(clientId)
-                .orElseThrow(() ->
-                        new ClientNotFoundException(clientId));
+    public AccountDto create(AccountDto dto) {
+        clientSnapshotRepository.findById(dto.clientId())
+                .orElseThrow(() -> new ClientNotFoundException(dto.clientId()));
+
         Account saved = repository.save(AccountMapper.toEntity(dto));
         return AccountMapper.toDto(saved);
+    }
+
+    @Override
+    public Page<AccountDto> findAccounts(Long clientId, Pageable pageable) {
+        Page<Account> accounts = clientId == null
+                ? repository.findAll(pageable)
+                : repository.findByClientId(clientId, pageable);
+
+        return accounts.map(AccountMapper::toDto);
     }
 
     @Override
@@ -35,14 +43,6 @@ public class AccountServiceImpl implements AccountService {
         return repository.findByAccountNumber(accountNumber)
                 .map(AccountMapper::toDto)
                 .orElseThrow(() -> new AccountNotFoundException(accountNumber));
-    }
-
-    @Override
-    public List<AccountDto> findByClientId(Long clientId) {
-        return repository.findByClientId(clientId)
-                .stream()
-                .map(AccountMapper::toDto)
-                .toList(); // Java 21 feature
     }
 
     @Override
@@ -56,9 +56,4 @@ public class AccountServiceImpl implements AccountService {
         return AccountMapper.toDto(repository.save(account));
     }
 
-    @Override
-    public void delete(String accountNumber) {
-        repository.findByAccountNumber(accountNumber)
-                .ifPresent(repository::delete);
-    }
 }

@@ -38,10 +38,10 @@ public class ClientCreatedConsumer {
             return;
         }
 
-        ClientSnapshot snapshot = new ClientSnapshot();
-        snapshot.setClientId(event.clientId());
-        snapshot.setName(event.name());
-        snapshot.setIdentification(event.identification());
+        ClientSnapshot snapshot = ClientSnapshot.builder()
+                .clientId(event.clientId())
+                .name(event.name())
+                .identification(event.identification()).build();
 
         repository.save(snapshot);
     }

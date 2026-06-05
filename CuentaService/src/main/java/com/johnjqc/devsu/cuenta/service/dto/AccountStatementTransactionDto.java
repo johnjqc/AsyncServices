@@ -3,13 +3,18 @@ package com.johnjqc.devsu.cuenta.service.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record TransactionDto(
-        Long id,
-        Long accountId,
+public record AccountStatementTransactionDto(
+
+        Long transactionId,
+
         LocalDateTime date,
-        String transactionType,
+
         BigDecimal amount,
-        Boolean status,
+
+        String transactionType,
+
         BigDecimal initialBalance,
+
         BigDecimal availableBalance
-) {}
+) {
+}

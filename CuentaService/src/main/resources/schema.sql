@@ -19,10 +19,9 @@ CREATE TABLE movimiento (
     fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     tipo_movimiento VARCHAR(20) NOT NULL,
     valor DECIMAL(18,2) NOT NULL,
-    saldo_anterior DECIMAL(18,2) NOT NULL,
+    estado BOOLEAN NOT NULL DEFAULT TRUE,
+    saldo_inicial DECIMAL(18,2) NOT NULL,
     saldo_disponible DECIMAL(18,2) NOT NULL,
-    descripcion VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_mov_cuenta
         FOREIGN KEY (cuenta_id)

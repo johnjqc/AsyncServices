@@ -5,6 +5,8 @@ import com.johnjqc.devsu.cuenta.service.dto.TransactionDto;
 
 public class TransactionMapper {
 
+    private TransactionMapper() {}
+
     public static TransactionDto toDto(Transaction t) {
         return new TransactionDto(
                 t.getId(),
@@ -12,9 +14,9 @@ public class TransactionMapper {
                 t.getDate(),
                 t.getTransactionType(),
                 t.getAmount(),
-                t.getPreviousBalance(),
-                t.getAvailableBalance(),
-                t.getDescription()
+                t.getStatus(),
+                t.getInitialBalance(),
+                t.getAvailableBalance()
         );
     }
 }

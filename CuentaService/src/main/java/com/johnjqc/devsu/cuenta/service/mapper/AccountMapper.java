@@ -5,6 +5,8 @@ import com.johnjqc.devsu.cuenta.service.dto.AccountDto;
 
 public class AccountMapper {
 
+    private AccountMapper() {}
+
     public static AccountDto toDto(Account a) {
         return new AccountDto(
                 a.getId(),

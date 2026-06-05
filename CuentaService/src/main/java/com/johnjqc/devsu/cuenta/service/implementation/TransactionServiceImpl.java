@@ -7,9 +7,13 @@ import com.johnjqc.devsu.cuenta.exception.InsufficientBalanceException;
 import com.johnjqc.devsu.cuenta.repository.AccountRepository;
 import com.johnjqc.devsu.cuenta.repository.TransactionRepository;
 import com.johnjqc.devsu.cuenta.service.TransactionService;
+import com.johnjqc.devsu.cuenta.service.dto.AccountDto;
 import com.johnjqc.devsu.cuenta.service.dto.TransactionDto;
+import com.johnjqc.devsu.cuenta.service.mapper.AccountMapper;
 import com.johnjqc.devsu.cuenta.service.mapper.TransactionMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,7 +32,7 @@ public class TransactionServiceImpl implements TransactionService {
         Account account = accountRepository.findById(dto.accountId())
                 .orElseThrow(() -> new AccountNotFoundException(dto.accountId().toString()));
 
-        var newBalance = account.getInitialBalance().add(dto.amount());
+        var newBalance = account.getInitialBalance().add(dto.initialBalance());
 
         if (newBalance.signum() < 0) {
             throw new InsufficientBalanceException();
@@ -41,9 +45,9 @@ public class TransactionServiceImpl implements TransactionService {
                 .date(LocalDateTime.now())
                 .transactionType(dto.transactionType())
                 .amount(dto.amount())
-                .previousBalance(account.getInitialBalance())
+                .status(true)
+                .initialBalance(account.getInitialBalance())
                 .availableBalance(newBalance)
-                .description(dto.description())
                 .build();
 
         accountRepository.save(account);
@@ -51,10 +55,15 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<TransactionDto> findByAccount(String accountNumber) {
-        return transactionRepository.findByAccountNumber(accountNumber)
-                .stream()
-                .map(TransactionMapper::toDto)
-                .toList();
+    public Page<TransactionDto> findByAccount(String accountNumber, Pageable pageable) {
+
+        Page<Transaction> transactions = transactionRepository
+                .findByAccount_AccountNumber(
+                        accountNumber,
+                        pageable
+                );
+
+        return transactions.map(TransactionMapper::toDto);
+
     }
 }

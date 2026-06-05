@@ -1,12 +1,13 @@
-package com.johnjqc.devsu.persona.exception;
+package com.johnjqc.devsu.persona.controller.advice;
 
+import com.johnjqc.devsu.persona.exception.ClientAlreadyExistsException;
+import com.johnjqc.devsu.persona.exception.ClientNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.stream.Collectors;
 

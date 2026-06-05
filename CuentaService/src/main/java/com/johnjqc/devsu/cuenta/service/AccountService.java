@@ -1,18 +1,17 @@
 package com.johnjqc.devsu.cuenta.service;
 
 import com.johnjqc.devsu.cuenta.service.dto.AccountDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface AccountService {
 
-    AccountDto create(Long clientId, AccountDto dto);
+    AccountDto create(AccountDto dto);
+
+    Page<AccountDto> findAccounts(Long clientId, Pageable pageable);
 
     AccountDto findByAccountNumber(String accountNumber);
 
-    List<AccountDto> findByClientId(Long clientId);
-
     AccountDto update(String accountNumber, AccountDto dto);
 
-    void delete(String accountNumber);
 }

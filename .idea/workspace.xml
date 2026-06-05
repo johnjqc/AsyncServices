@@ -5,9 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e6eae1d0-7243-4148-aa54-5e9121e0c696" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/entity/ClientSnapshot.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/entity/ClientSnapshot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/entity/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/entity/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/event/consumer/ClientCreatedConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/event/consumer/ClientCreatedConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/repository/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/repository/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/repository/TransactionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/TransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/dto/TransactionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/dto/TransactionDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/implementation/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/implementation/AccountServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/implementation/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/implementation/TransactionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/mapper/AccountMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/mapper/AccountMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/mapper/TransactionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/java/com/johnjqc/devsu/cuenta/service/mapper/TransactionMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CuentaService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PersonaService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PersonaService/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/resources/openapi/cuenta-api.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/resources/openapi/cuenta-api.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CuentaService/src/main/resources/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/CuentaService/src/main/resources/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PersonaService/src/main/java/com/johnjqc/devsu/persona/event/publisher/ClientEventPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/PersonaService/src/main/java/com/johnjqc/devsu/persona/event/publisher/ClientEventPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PersonaService/src/main/java/com/johnjqc/devsu/persona/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/PersonaService/src/main/java/com/johnjqc/devsu/persona/controller/advice/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PersonaService/src/main/java/com/johnjqc/devsu/persona/service/implementation/ClientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PersonaService/src/main/java/com/johnjqc/devsu/persona/service/implementation/ClientServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/kafka/init-topics.sh" beforeDir="false" afterPath="$PROJECT_DIR$/docker/kafka/init-topics.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +68,18 @@
                 <item name="cuenta-service" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cuenta-service" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cuenta-service" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="openapi tools" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -100,6 +132,8 @@
   "keyToString": {
     "Gradle.CuentaService [bootRun].executor": "Run",
     "Gradle.CuentaService [build].executor": "Run",
+    "Gradle.CuentaService [clean].executor": "Run",
+    "Gradle.CuentaService [openApiGenerate].executor": "Run",
     "Gradle.PersonaService [bootRun].executor": "Run",
     "Gradle.PersonaService [build].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -129,6 +163,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\repository\AsyncServices\CuentaService\src\main\java\com\johnjqc\devsu\cuenta" />
       <recent name="D:\repository\AsyncServices\CuentaService" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.johnjqc.devsu.cuenta.event.payload" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.CuentaService [bootRun]">
@@ -182,6 +219,56 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
+    <configuration name="CuentaService [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/CuentaService" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="CuentaService [openApiGenerate]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/CuentaService" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="openApiGenerate" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
     <configuration name="PersonaService [bootRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -207,37 +294,13 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="PersonaService [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/PersonaService" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <GradleProfilingDisabled>false</GradleProfilingDisabled>
-      <GradleCoverageDisabled>false</GradleCoverageDisabled>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.CuentaService [bootRun]" />
-        <item itemvalue="Gradle.PersonaService [bootRun]" />
-        <item itemvalue="Gradle.PersonaService [build]" />
         <item itemvalue="Gradle.CuentaService [build]" />
+        <item itemvalue="Gradle.CuentaService [openApiGenerate]" />
+        <item itemvalue="Gradle.CuentaService [clean]" />
+        <item itemvalue="Gradle.PersonaService [bootRun]" />
       </list>
     </recent_temporary>
   </component>
