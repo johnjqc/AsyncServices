@@ -9,6 +9,8 @@ import lombok.*;
 @Setter
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "client_snapshot")
 public class ClientSnapshot {
 
