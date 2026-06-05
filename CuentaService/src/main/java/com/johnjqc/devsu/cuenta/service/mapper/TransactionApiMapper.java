@@ -19,7 +19,7 @@ public class TransactionApiMapper {
 
         return new TransactionDto(
                 null,
-                request.getAccountId().longValue(),
+                request.getAccountId(),
                 null,
                 request.getTransactionType(),
                 request.getAmount(),
@@ -39,7 +39,7 @@ public class TransactionApiMapper {
 
         return new TransactionResponse()
                 .id(dto.id().intValue())
-                .accountId(dto.accountId().intValue())
+                .accountId(dto.accountId())
                 .date(toOffsetDateTime(dto.date()))
                 .transactionType(
                         dto.transactionType()

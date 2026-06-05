@@ -8,7 +8,7 @@ public record AccountDto(
         Long id,
         String accountNumber,
         AccountType accountType,
-        BigDecimal initialBalance,
+        BigDecimal balance,
         Boolean status,
         Long clientId
 ) {}

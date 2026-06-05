@@ -36,13 +36,13 @@ public class AccountController implements AccountsApi {
     }
 
     @Override
-    public ResponseEntity<AccountPageResponse> getAccounts(Integer clientId, Integer page, Integer size) {
+    public ResponseEntity<AccountPageResponse> getAccounts(Long clientId, Integer page, Integer size) {
 
         Pageable pageable = PageRequest.of(page, size);
 
         Page<AccountDto> accounts =
                 accountService.findAccounts(
-                        clientId.longValue(), pageable
+                        clientId, pageable
                 );
 
         return ResponseEntity.ok(

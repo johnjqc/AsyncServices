@@ -3,13 +3,12 @@ package com.johnjqc.devsu.cuenta.service.implementation;
 import com.johnjqc.devsu.cuenta.entity.Account;
 import com.johnjqc.devsu.cuenta.entity.Transaction;
 import com.johnjqc.devsu.cuenta.exception.AccountNotFoundException;
+import com.johnjqc.devsu.cuenta.exception.BusinessException;
 import com.johnjqc.devsu.cuenta.exception.InsufficientBalanceException;
 import com.johnjqc.devsu.cuenta.repository.AccountRepository;
 import com.johnjqc.devsu.cuenta.repository.TransactionRepository;
 import com.johnjqc.devsu.cuenta.service.TransactionService;
-import com.johnjqc.devsu.cuenta.service.dto.AccountDto;
 import com.johnjqc.devsu.cuenta.service.dto.TransactionDto;
-import com.johnjqc.devsu.cuenta.service.mapper.AccountMapper;
 import com.johnjqc.devsu.cuenta.service.mapper.TransactionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,21 +30,33 @@ public class TransactionServiceImpl implements TransactionService {
         Account account = accountRepository.findById(dto.accountId())
                 .orElseThrow(() -> new AccountNotFoundException(dto.accountId().toString()));
 
-        var newBalance = account.getInitialBalance().add(dto.initialBalance());
+        if (dto.amount() == null || dto.amount().signum() <= 0) {
+            throw new BusinessException("Amount must be greater than zero");
+        }
+
+        var currentBalance = account.getBalance();
+
+        var normalizedAmount = switch (dto.transactionType()) {
+            case "DEPOSIT" -> dto.amount();
+            case "WITHDRAWAL" -> dto.amount().negate();
+            default -> throw new IllegalStateException("Unexpected value: " + dto.transactionType());
+        };
+
+        var newBalance = account.getBalance().add(normalizedAmount);
 
         if (newBalance.signum() < 0) {
             throw new InsufficientBalanceException();
         }
 
-        account.setInitialBalance(newBalance);
+        account.setBalance(newBalance);
 
         Transaction transaction = Transaction.builder()
                 .account(account)
                 .date(LocalDateTime.now())
                 .transactionType(dto.transactionType())
-                .amount(dto.amount())
+                .amount(normalizedAmount)
                 .status(true)
-                .initialBalance(account.getInitialBalance())
+                .initialBalance(currentBalance)
                 .availableBalance(newBalance)
                 .build();
 

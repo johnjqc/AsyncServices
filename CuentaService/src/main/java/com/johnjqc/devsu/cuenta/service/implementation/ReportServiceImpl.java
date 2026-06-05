@@ -81,7 +81,8 @@ public class ReportServiceImpl implements ReportService {
                 account.getAccountNumber(),
                 account.getAccountType().name(),
                 account.getStatus(),
-                account.getInitialBalance(),
+                account.getBalance(),
+                calculateOpeningBalance(account, transactions),
                 calculateClosingBalance(account, transactions),
                 transactionResponses
         );
@@ -100,6 +101,16 @@ public class ReportServiceImpl implements ReportService {
         );
     }
 
+    private BigDecimal calculateOpeningBalance(
+            Account account,
+            List<Transaction> transactions) {
+
+        return transactions.stream()
+                .findFirst()
+                .map(Transaction::getInitialBalance)
+                .orElse(account.getBalance());
+    }
+
     private BigDecimal calculateClosingBalance(
             Account account, List<Transaction> transactions) {
 
@@ -108,6 +119,6 @@ public class ReportServiceImpl implements ReportService {
                         (first, second) -> second
                 )
                 .map(Transaction::getAvailableBalance)
-                .orElse(account.getInitialBalance());
+                .orElse(account.getBalance());
     }
 }

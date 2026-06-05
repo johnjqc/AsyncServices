@@ -3,6 +3,7 @@ package com.johnjqc.devsu.cuenta.controller.advice;
 import com.johnjqc.devsu.cuenta.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.OffsetDateTime;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -20,16 +22,18 @@ public class GlobalExceptionHandler {
             AccountNotFoundException ex,
             HttpServletRequest request) {
 
-        ProblemDetail problem =
-                ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        log.warn(
+                "Account not found. path={}, message={}",
+                request.getRequestURI(),
+                ex.getMessage()
+        );
 
-        problem.setTitle("Account not found");
-        problem.setDetail(ex.getMessage());
-
-        problem.setProperty("timestamp", OffsetDateTime.now());
-        problem.setProperty("path", request.getRequestURI());
-
-        return problem;
+        return buildProblem(
+                HttpStatus.NOT_FOUND,
+                "Account not found",
+                ex.getMessage(),
+                request
+        );
     }
 
     @ExceptionHandler(TransactionNotFoundException.class)
@@ -37,16 +41,18 @@ public class GlobalExceptionHandler {
             TransactionNotFoundException ex,
             HttpServletRequest request) {
 
-        ProblemDetail problem =
-                ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        log.warn(
+                "Transaction not found. path={}, message={}",
+                request.getRequestURI(),
+                ex.getMessage()
+        );
 
-        problem.setTitle("Transaction not found");
-        problem.setDetail(ex.getMessage());
-
-        problem.setProperty("timestamp", OffsetDateTime.now());
-        problem.setProperty("path", request.getRequestURI());
-
-        return problem;
+        return buildProblem(
+                HttpStatus.NOT_FOUND,
+                "Transaction not found",
+                ex.getMessage(),
+                request
+        );
     }
 
     @ExceptionHandler(ClientNotFoundException.class)
@@ -54,16 +60,18 @@ public class GlobalExceptionHandler {
             ClientNotFoundException ex,
             HttpServletRequest request) {
 
-        ProblemDetail problem =
-                ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        log.warn(
+                "Client not found. path={}, message={}",
+                request.getRequestURI(),
+                ex.getMessage()
+        );
 
-        problem.setTitle("Client not found");
-        problem.setDetail(ex.getMessage());
-
-        problem.setProperty("timestamp", OffsetDateTime.now());
-        problem.setProperty("path", request.getRequestURI());
-
-        return problem;
+        return buildProblem(
+                HttpStatus.NOT_FOUND,
+                "Client not found",
+                ex.getMessage(),
+                request
+        );
     }
 
     @ExceptionHandler(InsufficientBalanceException.class)
@@ -71,16 +79,18 @@ public class GlobalExceptionHandler {
             InsufficientBalanceException ex,
             HttpServletRequest request) {
 
-        ProblemDetail problem =
-                ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        log.warn(
+                "Insufficient balance. path={}, message={}",
+                request.getRequestURI(),
+                ex.getMessage()
+        );
 
-        problem.setTitle("Insufficient balance");
-        problem.setDetail(ex.getMessage());
-
-        problem.setProperty("timestamp", OffsetDateTime.now());
-        problem.setProperty("path", request.getRequestURI());
-
-        return problem;
+        return buildProblem(
+                HttpStatus.BAD_REQUEST,
+                "Insufficient balance",
+                ex.getMessage(),
+                request
+        );
     }
 
     @ExceptionHandler(BusinessException.class)
@@ -88,16 +98,18 @@ public class GlobalExceptionHandler {
             BusinessException ex,
             HttpServletRequest request) {
 
-        ProblemDetail problem =
-                ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        log.warn(
+                "Business rule violation. path={}, message={}",
+                request.getRequestURI(),
+                ex.getMessage()
+        );
 
-        problem.setTitle("Business rule violation");
-        problem.setDetail(ex.getMessage());
-
-        problem.setProperty("timestamp", OffsetDateTime.now());
-        problem.setProperty("path", request.getRequestURI());
-
-        return problem;
+        return buildProblem(
+                HttpStatus.BAD_REQUEST,
+                "Business rule violation",
+                ex.getMessage(),
+                request
+        );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -109,19 +121,24 @@ public class GlobalExceptionHandler {
                 .getFieldErrors()
                 .stream()
                 .map(error ->
-                        error.getField() + ": " + error.getDefaultMessage())
+                        "%s: %s".formatted(
+                                error.getField(),
+                                error.getDefaultMessage()
+                        ))
                 .collect(Collectors.joining(", "));
 
-        ProblemDetail problem =
-                ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        log.warn(
+                "Validation error. path={}, errors={}",
+                request.getRequestURI(),
+                errors
+        );
 
-        problem.setTitle("Validation error");
-        problem.setDetail(errors);
-
-        problem.setProperty("timestamp", OffsetDateTime.now());
-        problem.setProperty("path", request.getRequestURI());
-
-        return problem;
+        return buildProblem(
+                HttpStatus.BAD_REQUEST,
+                "Validation error",
+                errors,
+                request
+        );
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -129,16 +146,18 @@ public class GlobalExceptionHandler {
             ConstraintViolationException ex,
             HttpServletRequest request) {
 
-        ProblemDetail problem =
-                ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        log.warn(
+                "Constraint violation. path={}, message={}",
+                request.getRequestURI(),
+                ex.getMessage()
+        );
 
-        problem.setTitle("Validation error");
-        problem.setDetail(ex.getMessage());
-
-        problem.setProperty("timestamp", OffsetDateTime.now());
-        problem.setProperty("path", request.getRequestURI());
-
-        return problem;
+        return buildProblem(
+                HttpStatus.BAD_REQUEST,
+                "Validation error",
+                ex.getMessage(),
+                request
+        );
     }
 
     @ExceptionHandler(Exception.class)
@@ -146,16 +165,40 @@ public class GlobalExceptionHandler {
             Exception ex,
             HttpServletRequest request) {
 
-        ProblemDetail problem =
-                ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-
-        problem.setTitle("Internal server error");
-        problem.setDetail(
-                "An unexpected error occurred"
+        log.error(
+                "Unexpected error. path={}",
+                request.getRequestURI(),
+                ex
         );
 
-        problem.setProperty("timestamp", OffsetDateTime.now());
-        problem.setProperty("path", request.getRequestURI());
+        return buildProblem(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "Internal server error",
+                "An unexpected error occurred",
+                request
+        );
+    }
+
+    private ProblemDetail buildProblem(
+            HttpStatus status,
+            String title,
+            String detail,
+            HttpServletRequest request) {
+
+        ProblemDetail problem = ProblemDetail.forStatus(status);
+
+        problem.setTitle(title);
+        problem.setDetail(detail);
+
+        problem.setProperty(
+                "timestamp",
+                OffsetDateTime.now()
+        );
+
+        problem.setProperty(
+                "path",
+                request.getRequestURI()
+        );
 
         return problem;
     }

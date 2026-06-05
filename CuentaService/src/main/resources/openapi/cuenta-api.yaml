@@ -43,6 +43,7 @@ paths:
           required: false
           schema:
             type: integer
+            format: int64
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Size'
       responses:
@@ -225,8 +226,8 @@ components:
           example: "478758"
         accountType:
           type: string
-          enum: [SAVINGS, CHECKING]
-        initialBalance:
+          enum: [CORRIENTE, AHORROS]
+        balance:
           type: number
           format: double
           example: 2000
@@ -246,7 +247,7 @@ components:
           type: string
         accountType:
           type: string
-        initialBalance:
+        balance:
           type: number
         status:
           type: boolean
@@ -292,6 +293,7 @@ components:
       properties:
         accountId:
           type: integer
+          format: int64
         transactionType:
           type: string
           description: DEPOSIT or WITHDRAWAL
@@ -309,6 +311,7 @@ components:
           type: integer
         accountId:
           type: integer
+          format: int64
         date:
           type: string
           format: date-time
@@ -413,6 +416,11 @@ components:
 
         accountType:
           type: string
+
+        balance:
+          type: number
+          format: double
+          example: 100
 
         status:
           type: boolean

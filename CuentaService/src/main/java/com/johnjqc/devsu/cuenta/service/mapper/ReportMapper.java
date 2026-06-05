@@ -33,6 +33,7 @@ public final class ReportMapper {
                 .accountId(dto.accountId())
                 .accountNumber(dto.accountNumber())
                 .accountType(dto.accountType())
+                .balance(dto.balance().doubleValue())
                 .status(dto.status())
                 .openingBalance(dto.openingBalance().doubleValue())
                 .closingBalance(dto.closingBalance().doubleValue())

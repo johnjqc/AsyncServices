@@ -13,6 +13,8 @@ public record AccountStatementAccountDto(
 
         Boolean status,
 
+        BigDecimal balance,
+
         BigDecimal openingBalance,
 
         BigDecimal closingBalance,

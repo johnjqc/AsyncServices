@@ -12,7 +12,7 @@ public class AccountMapper {
                 a.getId(),
                 a.getAccountNumber(),
                 a.getAccountType(),
-                a.getInitialBalance(),
+                a.getBalance(),
                 a.getStatus(),
                 a.getClientId()
         );
@@ -23,7 +23,7 @@ public class AccountMapper {
         a.setId(dto.id());
         a.setAccountNumber(dto.accountNumber());
         a.setAccountType(dto.accountType());
-        a.setInitialBalance(dto.initialBalance());
+        a.setBalance(dto.balance());
         a.setStatus(dto.status());
         a.setClientId(dto.clientId());
         return a;

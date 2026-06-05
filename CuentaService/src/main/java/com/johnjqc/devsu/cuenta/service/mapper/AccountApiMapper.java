@@ -21,10 +21,10 @@ public class AccountApiMapper {
                 null,
                 request.getAccountNumber(),
                 AccountType.valueOf(request.getAccountType().name()),
-                request.getInitialBalance() == null
+                request.getBalance() == null
                         ? null
                         : BigDecimal.valueOf(
-                        request.getInitialBalance()
+                        request.getBalance()
                 ),
                 request.getStatus(),
                 request.getClientId().longValue()
@@ -37,10 +37,10 @@ public class AccountApiMapper {
                 .id(dto.id().intValue())
                 .accountNumber(dto.accountNumber())
                 .accountType(dto.accountType().name())
-                .initialBalance(
-                        dto.initialBalance() == null
+                .balance(
+                        dto.balance() == null
                                 ? null
-                                : dto.initialBalance()
+                                : dto.balance()
                 )
                 .status(dto.status())
                 .clientId(dto.clientId().intValue());
