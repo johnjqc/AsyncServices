@@ -2,57 +2,17 @@
 
 Microservicio responsable de la gestión de cuentas, movimientos y generación de reportes de estado de cuenta.
 
-Este servicio forma parte de una solución basada en microservicios y se comunica de forma asíncrona con el servicio de clientes mediante eventos Kafka.
-
 ---
 
-# Arquitectura
+## Responsabilidades
 
-La solución está implementada utilizando una arquitectura por capas:
-
-```text
-src/main/java
-├── controller
-├── service
-├── repository
-├── entity
-├── dto
-├── mapper
-├── exception
-├── config
-├── consumer
-└── producer
-```
-
-## Capas
-
-### Controller
-
-Expone los endpoints REST definidos en OpenAPI.
-
-### Service
-
-Implementa la lógica de negocio.
-
-### Repository
-
-Acceso a datos mediante Spring Data JPA.
-
-### Entity
-
-Entidades persistidas en la base de datos.
-
-### DTO
-
-Objetos utilizados para intercambio de información entre capas.
-
-### Mapper
-
-Transformación entre entidades, DTOs y modelos OpenAPI.
-
-### Consumer
-
-Consumidores Kafka para sincronización de información proveniente del servicio de clientes.
+- Crear cuentas
+- Consultar cuentas
+- Actualizar cuentas
+- Registrar movimientos
+- Validar saldo disponible
+- Generar reportes
+- Consumir eventos Kafka
 
 ---
 
@@ -204,7 +164,7 @@ size
 ### Estado de Cuenta
 
 ```http
-GET /api/v1/reports/account-statement
+GET /api/v1/reports
 ```
 
 Parámetros:
@@ -218,7 +178,7 @@ toDate
 Ejemplo:
 
 ```http
-GET /api/v1/reports/account-statement?clientId=2&fromDate=2022-02-01&toDate=2022-02-28
+GET /api/v1/reports?clientId=2&fromDate=2022-02-01&toDate=2022-02-28
 ```
 
 ---
@@ -237,7 +197,8 @@ GET /api/v1/reports/account-statement?clientId=2&fromDate=2022-02-01&toDate=2022
     {
       "accountId": 2,
       "accountNumber": "225487",
-      "accountType": "CHECKING",
+      "accountType": "CORRIENTE",
+      "balance": 1000.0,
       "status": true,
       "openingBalance": 100,
       "closingBalance": 700,
@@ -413,22 +374,6 @@ mediante Docker Compose.
 ```bash
 docker-compose up -d
 ```
-
----
-
-# Pruebas
-
-## Unitarias
-
-```bash
-./gradlew test
-```
-
-## Cobertura mínima implementada
-
-* Account Service
-* Transaction Service
-* Report Service
 
 ---
 

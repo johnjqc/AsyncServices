@@ -1,301 +1,163 @@
 # Async Services - Technical Challenge
 
-## Descripción
+Solución desarrollada utilizando una arquitectura basada en microservicios con Java 21, Spring Boot y Apache Kafka.
 
-Solución basada en arquitectura de microservicios desarrollada con Spring Boot 3 y Java 21.
+## Arquitectura General
 
-El sistema está compuesto por dos dominios independientes:
+La solución está compuesta por dos microservicios independientes:
 
-* **Persona Service**: Gestión de clientes.
-* **Cuenta Service**: Gestión de cuentas y movimientos.
+| Servicio | README                                                                                          | Responsabilidad                            |
+|-----------|-------------------------------------------------------------------------------------------------|--------------------------------------------|
+| Persona Service | [PersonaService/README.md](./PersonaService/README.md)                                          | Gestión de Personas y Clientes             |
+| Cuenta Service | [CuentaService/README.md](./CuentaService/README.md) | Gestión de Cuentas, Movimientos y Reportes |
 
-La comunicación entre ambos servicios se realiza mediante eventos asincrónicos utilizando Apache Kafka.
+La comunicación entre servicios se realiza de forma asíncrona mediante Apache Kafka.
+
+```text
++------------------+
+|  Persona Service |
++------------------+
+          |
+          | client.created
+          | client.updated
+          v
++------------------+
+|      Kafka       |
++------------------+
+          |
+          v
++------------------+
+|  Cuenta Service  |
++------------------+
+```
 
 ---
 
-## Arquitectura
+## Tecnologías
 
-### Microservicios
-
-#### Persona Service
-
-Responsable de:
-
-* Crear clientes
-* Consultar clientes
-* Actualizar clientes
-* Eliminar clientes
-
-Cuando un cliente es creado exitosamente, publica un evento en Kafka para notificar a otros dominios.
+- Java 21
+- Spring Boot 3
+- Spring Data JPA
+- Spring Validation
+- Spring Kafka
+- OpenAPI Generator
+- Lombok
+- Docker
+- Docker Compose
+- H2 Database
+- JUnit 5
+- MockMvc
 
 ---
 
-#### Cuenta Service
+## Estructura del Proyecto
 
-Responsable de:
+```text
+AsyncServices
+│
+├── PersonaService
+│   └── README.md
+│
+├── CuentaService
+│   └── README.md
+│
+├── docker-compose.yml
+│
+├── Customer Service API.postman_collection.json
+│
+├── Account Service API.postman_collection.json
+│
+└── README.md
+```
 
-* Crear cuentas bancarias
-* Registrar movimientos
-* Consultar movimientos
-* Generar reportes
+---
 
-Consume eventos emitidos por Persona Service para mantener una proyección local de clientes.
+## Funcionalidades Implementadas
+
+
+---
+
+### Cuenta Service
+
+- Gestión de cuentas
+- Registro de movimientos
+- Validación de saldo disponible
+- Reporte de estado de cuenta
+- Consumo de eventos Kafka
+
+Ver documentación detallada:
+
 
 ---
 
 ## Comunicación Asíncrona
 
-La integración entre dominios se realiza mediante Apache Kafka.
+El servicio de cuentas no realiza llamadas HTTP hacia Persona Service.
 
-### Evento publicado
-
-Topic:
+Para obtener información del cliente se implementó un patrón de:
 
 ```text
-client-created
+Local Read Model
 ```
 
-Payload:
-
-```json
-{
-  "clientId": 1,
-  "name": "Jose Lema",
-  "identification": "1234567890"
-}
-```
-
-### Flujo
-
-1. Persona Service crea un cliente.
-2. Persona Service publica evento ClientCreated.
-3. Kafka almacena el evento.
-4. Cuenta Service consume el evento.
-5. Cuenta Service actualiza su proyección local de clientes.
-
-Este diseño elimina el acoplamiento síncrono entre microservicios.
-
----
-
-## Arquitectura del Repositorio
+mediante una tabla:
 
 ```text
-AsyncServices/
-│
-├── docker-compose.yml
-│
-├── docker/
-│   └── kafka/
-│       └── init-topics.sh
-│
-├── PersonaService/
-│   ├── src/
-│   ├── build.gradle
-│   └── Dockerfile
-│
-├── CuentaService/
-│   ├── src/
-│   ├── build.gradle
-│   └── Dockerfile
-│
-└── README.md
+client_snapshot
 ```
----
 
-## Tecnologías Utilizadas
+actualizada a través de eventos Kafka.
 
-* Java 21
-* Spring Boot 3.2
-* Spring Data JPA
-* Spring Kafka
-* Apache Kafka
-* Zookeeper
-* H2 Database
-* Gradle
-* Docker
-* Docker Compose
-* OpenAPI
-* MapStruct
-* JUnit 5
-* Mockito
-* Testcontainers
+Esto permite:
+
+- Menor acoplamiento
+- Mayor disponibilidad
+- Mejor rendimiento
+- Escalabilidad independiente
 
 ---
 
-## Levantar la Solución
+## Ejecución Local
 
 ### Requisitos
 
-* Docker
-* Docker Compose
-
-Verificar instalación:
-
-```bash
-docker --version
-docker-compose --version
-```
+- Docker
+- Docker Compose
 
 ---
 
-### Construcción
-
-Desde la raíz del proyecto:
+### Levantar toda la plataforma
 
 ```bash
-docker-compose build
-```
-
----
-
-### Ejecución
-
-```bash
-docker-compose up
-```
-
-o
-
-```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 ---
 
 ## Servicios Disponibles
 
-| Servicio        | URL                              |
-| --------------- | -------------------------------- |
-| Persona Service | http://localhost:8081            |
-| Cuenta Service  | http://localhost:8082            |
-| Kafka UI        | http://localhost:8090            |
-| H2 Persona      | http://localhost:8081/h2-console |
-| H2 Cuenta       | http://localhost:8082/h2-console |
+| Servicio | URL |
+|-----------|-----------|
+| Persona Service | http://localhost:8081 |
+| Cuenta Service | http://localhost:8082 |
+| Kafka UI | http://localhost:8090 |
 
 ---
 
-## Configuración Kafka
+## Colecciones Postman
 
-### Broker interno
-
-```text
-kafka:9092
-```
-
-### Broker externo
+Incluidas en la raíz del proyecto:
 
 ```text
-localhost:29092
+Customer Service API.postman_collection.json
+Account Service API.postman_collection.json
 ```
-
-### Topics
-
-```text
-client-created
-```
-
-Los topics son creados automáticamente mediante el contenedor:
-
-```text
-kafka-init
-```
-
----
-
-## Documentación OpenAPI
-
-### Persona Service
-
-```text
-http://localhost:8081/swagger-ui.html
-```
-
-o
-
-```text
-http://localhost:8081/swagger-ui/index.html
-```
-
----
-
-### Cuenta Service
-
-```text
-http://localhost:8082/swagger-ui.html
-```
-
-o
-
-```text
-http://localhost:8082/swagger-ui/index.html
-```
-
----
-
-## Bases de Datos
-
-Actualmente ambos servicios utilizan H2.
-
-### Persona Service
-
-```text
-jdbc:h2:mem:test
-```
-
-### Cuenta Service
-
-```text
-jdbc:h2:mem:test
-```
-
-Usuario:
-
-```text
-sa
-```
-
-Password:
-
-```text
-(vacío)
-```
-
----
-
-## Consideraciones de Escalabilidad
-
-La solución contempla:
-
-### Escalabilidad
-
-* Servicios desacoplados mediante eventos.
-* Kafka permite múltiples consumidores.
-* Posibilidad de particionar topics.
-
-### Rendimiento
-
-* Comunicación asíncrona.
-* Eliminación de dependencias síncronas entre dominios.
-
-### Resiliencia
-
-* Persistencia de eventos en Kafka.
-* Reintentos automáticos de consumidores.
-* Recuperación ante reinicio de servicios.
 
 ---
 
 ## Pruebas
 
-Ejecutar pruebas unitarias:
+Se incluyen en PersonaService:
 
-```bash
-./gradlew test
-```
-
-o
-
-```bash
-gradle test
-```
-
+- Prueba unitaria
+- Prueba de integración
